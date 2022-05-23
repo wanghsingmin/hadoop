@@ -47,10 +47,10 @@ jobs:
           mkdir staging
           #find . -name '*.tar.gz' | xargs -i cp {} staging
           cp ./hadoop-dist/target/hadoop-3.3.1.tar.gz staging
-          sudo tar zxf ./hadoop-dist/target/hadoop-3.3.1.tar.gz -C /usr/local/
+          #sudo tar zxf ./hadoop-dist/target/hadoop-3.3.1.tar.gz -C /usr/local/
           sudo /usr/local/hadoop-3.3.1/bin/hadoop checknative -a
       - name: upload-artifact
         uses: actions/upload-artifact@v3
         with:
-          name: Package_checknative1
+          name: Package_hadoop-3.3.1
           path: staging
