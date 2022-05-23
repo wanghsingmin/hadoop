@@ -38,7 +38,7 @@ jobs:
           sudo apt-get install -y libpmem1 librpmem1 libpmemblk1 libpmemlog1 libpmemobj1 libpmempool1
           sudo apt-get install -y libpmem-dev librpmem-dev libpmemblk-dev libpmemlog-dev libpmemobj-dev libpmempool-dev libpmempool-dev
           sudo apt-get install -y libpmem1-debug librpmem1-debug libpmemblk1-debug libpmemlog1-debug libpmemobj1-debug libpmempool1-debug
-          cd /home/runner/work/hadoop331/hadoop331/
+          cd /home/runner/work/hadoop/hadoop/
           #mvn clean package -DskipTests -Pdist,native -Dtar -Drequire.snappy -Dsnappy.lib=/usr/lib/x86_64-linux-gnu -Drequire.zstd -Drequire.openssl -Drequire.isal -Drequire.pmdk dependency-check:aggregate -Dmaven.javadoc.skip=true
           #mvn clean package -DskipTests -Pdist,native -Dtar -Dmaven.javadoc.skip=true
           #mvn clean package -DskipTests -Pdist,native -Dtar -Dmaven.javadoc.skip=true -Drequire.pmdk -Dpmdk.lib -Dbundle.pmdk -Drequire.isal -Disal.lib -Dbundle.isal -Drequire.openssl -Dopenssl.lib -Dbundle.openssl
