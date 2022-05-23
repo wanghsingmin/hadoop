@@ -1,0 +1,56 @@
+name: Hadoop3
+on: 
+  push:
+    branches: [ trunk ]
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+        with:
+          ref: branch-3.3.1
+      - name: build hadoop
+        env:
+          JAVA_HOME: /usr/lib/jvm/java-8-openjdk-amd64
+        run: |
+          sudo lsb_release -a
+          sudo uname -m
+          sudo apt-get -y install openjdk-8-jdk
+          sudo apt-get -y install maven
+          sudo apt-get -y install build-essential autoconf automake libtool cmake zlib1g-dev pkg-config libssl-dev libsasl2-dev
+          sudo curl -L -s -S https://github.com/protocolbuffers/protobuf/releases/download/v3.7.1/protobuf-java-3.7.1.tar.gz -o protobuf-3.7.1.tar.gz
+          sudo mkdir protobuf-3.7-src
+          sudo tar xzf protobuf-3.7.1.tar.gz --strip-components 1 -C protobuf-3.7-src && cd protobuf-3.7-src
+          sudo ./configure
+          sudo make -j$(nproc)
+          sudo make install
+          sudo apt-get -y install nodejs
+          sudo apt-get -y install npm
+          sudo apt-get -y install yarn
+          sudo apt-get install libsnappy1v5 libsnappy-dev
+          sudo apt-get -y install isal
+          sudo apt-get -y install bzip2 libbz2-dev
+          sudo apt-get -y install fuse libfuse-dev
+          sudo apt-get -y install libzstd-dev
+          sudo apt-get -y install zstd
+          sudo apt-get -y install libzstd1
+          sudo apt-get install -y libpmem1 librpmem1 libpmemblk1 libpmemlog1 libpmemobj1 libpmempool1
+          sudo apt-get install -y libpmem-dev librpmem-dev libpmemblk-dev libpmemlog-dev libpmemobj-dev libpmempool-dev libpmempool-dev
+          sudo apt-get install -y libpmem1-debug librpmem1-debug libpmemblk1-debug libpmemlog1-debug libpmemobj1-debug libpmempool1-debug
+          cd /home/runner/work/hadoop331/hadoop331/
+          #mvn clean package -DskipTests -Pdist,native -Dtar -Drequire.snappy -Dsnappy.lib=/usr/lib/x86_64-linux-gnu -Drequire.zstd -Drequire.openssl -Drequire.isal -Drequire.pmdk dependency-check:aggregate -Dmaven.javadoc.skip=true
+          #mvn clean package -DskipTests -Pdist,native -Dtar -Dmaven.javadoc.skip=true
+          #mvn clean package -DskipTests -Pdist,native -Dtar -Dmaven.javadoc.skip=true -Drequire.pmdk -Dpmdk.lib -Dbundle.pmdk -Drequire.isal -Disal.lib -Dbundle.isal -Drequire.openssl -Dopenssl.lib -Dbundle.openssl
+          #mvn clean package -DskipTests -Pdist,native -Dtar -Dmaven.javadoc.skip=true -Drequire.pmdk -Dpmdk.lib -Dbundle.pmdk
+          mvn clean package -DskipTests -Pdist,native -Dtar -Dmaven.javadoc.skip=true -Drequire.pmdk -Dpmdk.lib -Dbundle.pmdk -Drequire.openssl -Dopenssl.lib=/lib/x86_64-linux-gnu -Dbundle.openssl -Drequire.isal -Disal.lib=/lib/x86_64-linux-gnu -Dbundle.isal
+          mkdir staging
+          #find . -name '*.tar.gz' | xargs -i cp {} staging
+          cp ./hadoop-dist/target/hadoop-3.3.1.tar.gz staging
+          sudo tar zxf ./hadoop-dist/target/hadoop-3.3.1.tar.gz -C /usr/local/
+          sudo /usr/local/hadoop-3.3.1/bin/hadoop checknative -a
+      - name: upload-artifact
+        uses: actions/upload-artifact@v3
+        with:
+          name: Package_checknative1
+          path: staging
