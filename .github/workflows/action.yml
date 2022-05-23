@@ -25,9 +25,9 @@ jobs:
           sudo ./configure
           sudo make -j$(nproc)
           sudo make install
-          sudo apt-get -y install nodejs
-          sudo apt-get -y install npm
-          sudo apt-get -y install yarn
+          #sudo apt-get -y install nodejs
+          #sudo apt-get -y install npm
+          #sudo apt-get -y install yarn
           sudo apt-get install libsnappy1v5 libsnappy-dev
           sudo apt-get -y install isal
           sudo apt-get -y install bzip2 libbz2-dev
@@ -48,7 +48,7 @@ jobs:
           #find . -name '*.tar.gz' | xargs -i cp {} staging
           cp ./hadoop-dist/target/hadoop-3.3.1.tar.gz staging
           #sudo tar zxf ./hadoop-dist/target/hadoop-3.3.1.tar.gz -C /usr/local/
-          sudo /usr/local/hadoop-3.3.1/bin/hadoop checknative -a
+          #sudo /usr/local/hadoop-3.3.1/bin/hadoop checknative -a
       - name: upload-artifact
         uses: actions/upload-artifact@v3
         with:
