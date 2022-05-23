@@ -43,7 +43,7 @@ jobs:
           #mvn clean package -DskipTests -Pdist,native -Dtar -Dmaven.javadoc.skip=true
           #mvn clean package -DskipTests -Pdist,native -Dtar -Dmaven.javadoc.skip=true -Drequire.pmdk -Dpmdk.lib -Dbundle.pmdk -Drequire.isal -Disal.lib -Dbundle.isal -Drequire.openssl -Dopenssl.lib -Dbundle.openssl
           #mvn clean package -DskipTests -Pdist,native -Dtar -Dmaven.javadoc.skip=true -Drequire.pmdk -Dpmdk.lib -Dbundle.pmdk
-          mvn -e -X clean package -rf :hadoop-yarn-applications-catalog-webapp -DskipTests -Pdist,native -Dtar -Dmaven.javadoc.skip=true -Drequire.pmdk -Dpmdk.lib -Dbundle.pmdk -Drequire.openssl -Dopenssl.lib=/lib/x86_64-linux-gnu -Dbundle.openssl -Drequire.isal -Disal.lib=/lib/x86_64-linux-gnu -Dbundle.isal  
+          mvn clean package -DskipTests -Pdist,native -Dtar -Dmaven.javadoc.skip=true -Drequire.pmdk -Dpmdk.lib -Dbundle.pmdk -Drequire.openssl -Dopenssl.lib=/lib/x86_64-linux-gnu -Dbundle.openssl -Drequire.isal -Disal.lib=/lib/x86_64-linux-gnu -Dbundle.isal  
           mkdir staging
           #find . -name '*.tar.gz' | xargs -i cp {} staging
           cp ./hadoop-dist/target/hadoop-3.3.1.tar.gz staging
